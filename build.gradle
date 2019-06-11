@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+group = 'demo'
+
+repositories {
+    maven {
+       url 'https://artifact.aspose.com/repo/'
+    }
+}
+
+configurations.each {
+    it.exclude group: 'xml-apis', module: 'xml-apis'
+    it.exclude group: 'stax'
+    it.exclude group: 'javax.xml.stream'
+    it.exclude group: 'xalan'
+}
+
+dependencies {
+    compile group: 'com.aspose', name: 'aspose-email', version: '19.4', classifier: 'jdk16'
+    //compile group: 'com.aspose', name: 'aspose-email', version: '19.4', classifier: 'jdk16', ext: 'jar'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
